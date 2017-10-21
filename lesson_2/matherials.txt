@@ -1,0 +1,97 @@
+Спасибо за участие в курсе. Ниже материалы к лекции. 
+
+Pdf-версия презентации
+https://goo.gl/Y5gbDr  
+
+Задание на дом:
+В основном репозитории курса, в папке lesson2 (https://github.com/nesterione/dl/tree/master/lesson2) расположены два файла matrix.py и testMatrix.py
+
+Файл matrix.py содержит определение класса Matrix - класс матрицы - для которого переопределены методы:
+__getitem__  - индексация
+__setitem__  - назначение элемента по индексу.
+__str__ - вызывается функциями str, print и format. Возвращает строковое представление объекта.
+__eq__ - x == y вызывает x.__eq__(y)
+__add__ - сложение. x + y вызывает x.__add__(y)
+__sub__ - вычитание
+__mul__ - умножение (x * y), произведение Адамара (см. презентацию)
+Также класс содержит функции:
+getRank  - получить размерность матрицы
+transpose - вернуть транспонированное представление матрицы
+dot - матричное перемножение
+fromList - создание матрицы из списка
+makeId - создание единичной матрицы
+Задание заключается в том, чтобы дописать функции:
+transpose
+dot
+__add__
+__sub__
+Для того, чтобы проверить правильность написанных функций, нужно скачать файл testMatrix.py, который содержит тесты для класса Matrix, в ту же папку, что и файл с классом матрицы и запустить его. Если все тесты пройдены, то программа завершится без ошибок.
+
+Вывод программы, в случае не прохождения тестов:
+FF..FF
+======================================================================
+FAIL: testAdd (__main__.MatrixTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Pc_Home\Google Диск\Deep Learning courses\dl\lesson2\testMatrix.py", line 10, in testAdd
+    self.assertTrue(m3 == Matrix.fromList([[8, 10, 12], [14,16,18]]))
+AssertionError: False is not true
+
+======================================================================
+FAIL: testDot (__main__.MatrixTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Pc_Home\Google Диск\Deep Learning courses\dl\lesson2\testMatrix.py", line 30, in testDot
+    self.assertTrue(m1.dot(m2) == Matrix.fromList([[63, 69], [150, 165]]))
+AssertionError: False is not true
+
+======================================================================
+FAIL: testSub (__main__.MatrixTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Pc_Home\Google Диск\Deep Learning courses\dl\lesson2\testMatrix.py", line 16, in testSub
+    self.assertTrue(m3 == Matrix.fromList([[6, 6, 6], [6, 6, 6]]))
+AssertionError: False is not true
+
+======================================================================
+FAIL: testTranspose (__main__.MatrixTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Pc_Home\Google Диск\Deep Learning courses\dl\lesson2\testMatrix.py", line 38, in testTranspose
+    self.assertTrue(m1.transpose()==m2)
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.007s
+
+FAILED (failures=4)
+
+Вывод программы верно прошедшей все тесты:
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.000s
+
+OK
+[Finished in 0.5s]
+
+Про перегрузку операторов можно почитать тут - https://pythonworld.ru/osnovy/peregruzka-operatorov.html. Про линейную алгебру в машинном обучении есть глава в книге Deep Learning http://www.deeplearningbook.org/contents/linear_algebra.html. 
+
+Видео 
+Видео постараемся скинуть позже.
+
+Не забывайте, что задать вопросы можно здесь  https://join.skype.com/DyqlkZ4QlBy9  также мы устроим созвон по среди недели, где сможем что-то дополнительно пояснить или помочь.   
+
+
+Следующее занятие про Numpy для работы с матрицами в Python:
+Модуль numerical python (Numpy) для работы с матрицами. Векторизация вместо циклов. Индексация и срезы в массивах. Чтение и запись файлов с помощью Numpy.
+
+
+-------- 
+Отзывы/рекомендации: 
+https://goo.gl/forms/fyUts2GsvTadMuQm2 
+
+Общий чат в skype (там же будут online созвоны):
+ https://join.skype.com/DyqlkZ4QlBy9  
+
+Чтобы отписаться от рассылки, заполните форму:
+https://goo.gl/forms/JoOztxcnvSgDa8Rf2 
