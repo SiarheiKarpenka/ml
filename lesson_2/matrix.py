@@ -72,14 +72,21 @@ class Matrix(object):
         return (mat.array == self.array)
 
     def transpose(self):
-        """ Транспонированное представление матрицы 
-    
-            Здесь нужно вписать свой код для создания 
+        """ Транспонированное представление матрицы
+
+            Здесь нужно вписать свой код для создания
             функции, возвращающей транспонированную
             матрицу
             Aij = Aji
         """
-        return self
+        # transposedMatrix init
+        transposedMatrix = Matrix(self.m, self.n, True)
+        # iterate through rows
+        for i in range(self.n):
+            # iterate through columns
+            for j in range(self.m):
+                transposedMatrix[j][i] = self.array[i][j]
+        return transposedMatrix
 
     def __add__(self, mat):
         """ Переопределение операции сложения "+"
@@ -93,7 +100,14 @@ class Matrix(object):
         операцию сложения
         Cij = Aij+Bij
         '''
-        return self
+        # initialize resultMatrix
+        resultMatrix = Matrix(self.n, self.m, True)
+        # iterate through rows
+        for i in range(self.n):
+            # iterate through columns
+            for j in range(self.m):
+                resultMatrix[i][j] = self.array[i][j] + mat.array[i][j]
+        return resultMatrix
         
 
     def __sub__(self, mat):
@@ -108,7 +122,14 @@ class Matrix(object):
         операцию вычитания
         Cij = Aij-Bij
         '''
-        return self
+        # initialize resultMatrix
+        resultMatrix = Matrix(self.n, self.m, True)
+        # iterate through rows
+        for i in range(self.n):
+            # iterate through columns
+            for j in range(self.m):
+                resultMatrix[i][j] = self.array[i][j] - mat.array[i][j]
+        return resultMatrix
 
     def __mul__(self, mat):
         """Произведение Адамара или поточечное умножение"""
@@ -147,7 +168,16 @@ class Matrix(object):
         новую матрицу
         Cij = sum(Aik*Bkj)
         '''
-        return self
+        # initialize resultMatrix
+        resultMatrix = Matrix(self.n, mat.m, True)
+        # iterate through rows of self
+        for i in range(self.n):
+            # iterate through columns of mat
+            for j in range(mat.m):
+                # iterate through rows of mat
+                for k in range(mat.n):
+                    resultMatrix[i][j] += self.array[i][k] * mat.array[k][j]
+        return resultMatrix
 
     @classmethod
     def _makeMatrix(cls, array):
