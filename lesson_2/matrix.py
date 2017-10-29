@@ -79,7 +79,7 @@ class Matrix(object):
             матрицу
             Aij = Aji
         """
-        # transposedMatrix init
+        # transposedMatrix init, matrix size m rows, n columns (inverted)
         transposedMatrix = Matrix(self.m, self.n, True)
         # iterate through rows
         for i in range(self.n):
@@ -100,7 +100,7 @@ class Matrix(object):
         операцию сложения
         Cij = Aij+Bij
         '''
-        # initialize resultMatrix
+        # initialize resultMatrix, matrix size n rows, m columns (same as original)
         resultMatrix = Matrix(self.n, self.m, True)
         # iterate through rows
         for i in range(self.n):
@@ -122,7 +122,7 @@ class Matrix(object):
         операцию вычитания
         Cij = Aij-Bij
         '''
-        # initialize resultMatrix
+        # initialize resultMatrix, matrix size n rows, m columns (same as original)
         resultMatrix = Matrix(self.n, self.m, True)
         # iterate through rows
         for i in range(self.n):
@@ -168,7 +168,7 @@ class Matrix(object):
         новую матрицу
         Cij = sum(Aik*Bkj)
         '''
-        # initialize resultMatrix
+        # initialize resultMatrix, matrix size original n rows, mat m columns (self.n, mat.m)
         resultMatrix = Matrix(self.n, mat.m, True)
         # iterate through rows of self
         for i in range(self.n):
