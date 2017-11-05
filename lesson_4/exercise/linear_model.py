@@ -40,7 +40,7 @@ class LinearRegression():
                                               [ 0. ,  0. ,  0. ],
                                               [ 0.5,  0.5,  0.5]])
         '''
-        x_norm = x
+        x_norm = (x - x.mean())/(x.max() - x.min())
         return x_norm
 
     def __weight_init(self, n_features):
@@ -53,7 +53,7 @@ class LinearRegression():
         '''
         # исправьте код так, чтобы
         # self.W был равен вектору НУЛЕЙ
-        self.W = n_features
+        self.W = np.zeros((1, n_features))
 
     def predict(self, x):
         '''Метод выполняющий прогноз, согласно гипотезе
@@ -71,7 +71,7 @@ class LinearRegression():
 
         # нужно исправить return, чтобы он возвращал результат 
         # матричного перемножения x и параметров модели
-        return x
+        return self.W.dot(x.T)
 
     def cost(self, x, y):
         '''MSE ошибка
@@ -81,7 +81,8 @@ class LinearRegression():
         '''Допишите код, чтобы метод вычислял среднеквадратичное
            отклонение по формуле выше
         '''
-        J = 0
+        y_pred = self.predict(x)
+        J = ((y_pred - y).T.dot(y_pred - y))/(2*len(y_pred))
         return J
 
     def __gradient(self, x, y):
@@ -89,9 +90,9 @@ class LinearRegression():
         grad = 1/m*(sum(h(x)-y)*x)
         '''
         # допишите код для вычисления градиентов 
-        # по каждому параметру 
-        grad = 0
-
+        # по каждому параметру
+        y_pred = self.predict(x)
+        grad = ((y_pred - y).dot(x))/len(y_pred)
         return grad
 
     def fit(self, X, y, verbose=True):
