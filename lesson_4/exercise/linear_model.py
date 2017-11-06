@@ -40,7 +40,7 @@ class LinearRegression():
                                               [ 0. ,  0. ,  0. ],
                                               [ 0.5,  0.5,  0.5]])
         '''
-        x_norm = (x - x.mean())/(x.max() - x.min())
+        x_norm = (x - x.mean(0)) / x.ptp(0)
         return x_norm
 
     def __weight_init(self, n_features):
@@ -82,7 +82,7 @@ class LinearRegression():
            отклонение по формуле выше
         '''
         y_pred = self.predict(x)
-        J = ((y_pred - y).T.dot(y_pred - y))/(2*len(y_pred))
+        J = np.square(y - y_pred).mean()
         return J
 
     def __gradient(self, x, y):
