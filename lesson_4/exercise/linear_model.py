@@ -13,8 +13,7 @@ class LinearRegression():
                     уже нормализованы 
     '''
 
-    def __init__(self, alpha=0.001, epsilon=0.001,
-                 max_iter=100000, normalize=True):
+    def __init__(self, alpha=0.001, epsilon=0.001, max_iter=100000, normalize=True):
         self.alpha = alpha
         self.epsilon = epsilon
         self.max_iter = max_iter
@@ -37,12 +36,12 @@ class LinearRegression():
             выполняла нормализацию 
             для проверки: массив [[1,2,3],
                                   [4,5,6],
-                                  [7,8,8]]
+                                  [7,8,9]]
             после нормализации будет равен = [[-0.5, -0.5, -0.5],
                                               [ 0. ,  0. ,  0. ],
                                               [ 0.5,  0.5,  0.5]])
         '''
-        x_norm = (x - x.mean(0)) / x.ptp(0)
+        x_norm = (x - np.mean(x,0)) / np.ptp(x,0)
         return x_norm
 
     def __weight_init(self, n_features):
@@ -73,7 +72,7 @@ class LinearRegression():
 
         # нужно исправить return, чтобы он возвращал результат 
         # матричного перемножения x и параметров модели
-        return x * self.W
+        return self.W.dot(x.T)
 
     def cost(self, x, y):
         '''MSE ошибка
@@ -84,7 +83,7 @@ class LinearRegression():
            отклонение по формуле выше
         '''
         y_pred = self.predict(x)
-        J = np.square(y_pred - y).mean() / 2
+        J = np.square(y - y_pred).mean() / 2
         return J
 
     def __gradient(self, x, y):
@@ -94,7 +93,7 @@ class LinearRegression():
         # допишите код для вычисления градиентов 
         # по каждому параметру
         y_pred = self.predict(x)
-        grad = ((y_pred - y) * x).mean()
+        grad = (y_pred - y).dot(x) / len(y_pred)
         return grad
 
     def fit(self, X, y, verbose=True):
