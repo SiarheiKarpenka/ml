@@ -1,4 +1,5 @@
-import numpy as np 
+import numpy as np
+
 
 class LinearRegression():
     '''Линейная регрессия
@@ -11,15 +12,16 @@ class LinearRegression():
                     данные, False подразумевает, что данные
                     уже нормализованы 
     '''
-    def __init__(self, alpha=0.001, epsilon=0.001, 
+
+    def __init__(self, alpha=0.001, epsilon=0.001,
                  max_iter=100000, normalize=True):
-        self.alpha     = alpha
-        self.epsilon   = epsilon
-        self.max_iter  = max_iter
-        self.normalize = normalize 
+        self.alpha = alpha
+        self.epsilon = epsilon
+        self.max_iter = max_iter
+        self.normalize = normalize
 
     @staticmethod
-    def normalization(x): 
+    def normalization(x):
         '''Метод выполняет стандартизацию данных 
         по формуле (x - среднее)/(макс-мин)
         это отличается от классического Z-score
@@ -53,7 +55,7 @@ class LinearRegression():
         '''
         # исправьте код так, чтобы
         # self.W был равен вектору НУЛЕЙ
-        self.W = np.zeros((1, n_features))
+        self.W = np.zeros(n_features)
 
     def predict(self, x):
         '''Метод выполняющий прогноз, согласно гипотезе
@@ -71,7 +73,7 @@ class LinearRegression():
 
         # нужно исправить return, чтобы он возвращал результат 
         # матричного перемножения x и параметров модели
-        return self.W.dot(x.T)
+        return x * self.W
 
     def cost(self, x, y):
         '''MSE ошибка
@@ -82,7 +84,7 @@ class LinearRegression():
            отклонение по формуле выше
         '''
         y_pred = self.predict(x)
-        J = np.square(y - y_pred).mean()
+        J = np.square(y_pred - y).mean() / 2
         return J
 
     def __gradient(self, x, y):
@@ -92,7 +94,7 @@ class LinearRegression():
         # допишите код для вычисления градиентов 
         # по каждому параметру
         y_pred = self.predict(x)
-        grad = ((y_pred - y).dot(x))/len(y_pred)
+        grad = ((y_pred - y) * x).mean()
         return grad
 
     def fit(self, X, y, verbose=True):
@@ -115,40 +117,41 @@ class LinearRegression():
         # инициализация весов
         self.__weight_init(X.shape[1])
         # градиентный спуск
-        prev_cost = self.cost(X, y) # начальное значение ошибки
+        prev_cost = self.cost(X, y)  # начальное значение ошибки
         if verbose:
             print('Начальное значение ошибки: {}'.format(prev_cost))
 
-        i_epoch   = 0
+        i_epoch = 0
         while i_epoch < self.max_iter:
             # вычисление градиента
-            grad   = self.__gradient(X, y)
+            grad = self.__gradient(X, y)
             # обновление весов
-            self.W = self.W - self.alpha*grad
+            self.W = self.W - self.alpha * grad
             # вычисление новой ошибки
             curr_cost = self.cost(X, y)
             if verbose:
                 print('Итерация {:05d}: Ошибка={}'.format(i_epoch, curr_cost))
             # проверка условия сходимости
-            if abs(prev_cost-curr_cost) < self.epsilon:
+            if abs(prev_cost - curr_cost) < self.epsilon:
                 break
             else:
                 prev_cost = curr_cost
             i_epoch += 1
 
+
 if __name__ == '__main__':
-    from sklearn.datasets.samples_generator import make_regression 
+    from sklearn.datasets.samples_generator import make_regression
 
     # генерация данных для регрессии
-    x, y = make_regression(n_samples=20, n_features=20, n_informative=13, random_state=0, noise=35) 
-    print('x.shape = %s y.shape = %s' %(x.shape, y.shape))
+    x, y = make_regression(n_samples=20, n_features=20, n_informative=13, random_state=0, noise=35)
+    print('x.shape = %s y.shape = %s' % (x.shape, y.shape))
     # добавление единичного столбца
-    X = np.ones((x.shape[0], x.shape[1]+1))
+    X = np.ones((x.shape[0], x.shape[1] + 1))
     X[:, 1:] = x
     # создание регрессии
     clf = LinearRegression()
     # обучение регрессии
-    clf.fit(X,y)
+    clf.fit(X, y)
     # ошибка после обучения
-    print(clf.cost(X,y))
+    print(clf.cost(X, y))
     ### если все правильно, то ошибка должна быть где-то около 22###
