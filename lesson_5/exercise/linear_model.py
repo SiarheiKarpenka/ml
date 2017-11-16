@@ -1,11 +1,12 @@
 import numpy as np
 
+import math
 
 def sigmoid(z):
     '''
     TODO (new) Допишите функцию сигмоида 
-    '''  
-    return 
+    '''
+    return 1. / (1 + np.exp(-z.astype(np.float64)))
 
 
 class LogisticRegression():
@@ -46,7 +47,7 @@ class LogisticRegression():
                                               [ 0. ,  0. ,  0. ],
                                               [ 0.5,  0.5,  0.5]])
         '''
-        x_norm = # TODO допишите нормализацию 
+        x_norm = (x - np.mean(x,0)) / np.ptp(x,0)
         return x_norm
 
     def __weight_init(self, n_features):
@@ -59,7 +60,7 @@ class LogisticRegression():
         '''
         # TODO исправьте код так, чтобы
         # self.W был равен вектору НУЛЕЙ
-        self.W = n_features
+        self.W = np.zeros(n_features)
 
     def predict(self, x):
         '''Метод выполняющий прогноз, согласно гипотезе
@@ -87,7 +88,9 @@ class LogisticRegression():
         Это самая важная часть задания, смотрите внимательно на формулу
         и проверяйте какой размерности получается результат 
         '''
-        return 
+        y_pred = self.predict(X)
+        cost = ((-y).dot(np.log(y_pred)) - (1 - y).dot(np.log(1 - y_pred))) / len(X)
+        return cost
 
     def __gradient(self, x, y):
         ''' TODO Метод, вычисляющий градиенты на каждом шагу
@@ -95,7 +98,8 @@ class LogisticRegression():
         '''
         # допишите код для вычисления градиентов 
         # по каждому параметру 
-        grad = 0
+        y_pred = self.predict(x)
+        grad = (y_pred - y).dot(x) / len(y_pred)
         return grad
 
     def fit(self, X, y, verbose=True):
