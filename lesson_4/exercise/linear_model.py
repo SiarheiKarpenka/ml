@@ -93,7 +93,7 @@ class LinearRegression():
         # допишите код для вычисления градиентов 
         # по каждому параметру
         y_pred = self.predict(x)
-        grad = (y_pred - y).dot(x) / len(y_pred)
+        grad = ((y_pred - y).dot(x)) / len(y_pred)
         return grad
 
     def fit(self, X, y, verbose=True):
